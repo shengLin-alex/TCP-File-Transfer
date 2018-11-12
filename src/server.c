@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
 
     char *IP_SERV = argv[1];
     socket_file_descriptor = create_server_socket(atoi(IP_SERV));
+    printf("server listening on %d...\n", atoi(IP_SERV));
 
     bzero(buffer, BUFFERT);
     listen(socket_file_descriptor, BACKLOG);

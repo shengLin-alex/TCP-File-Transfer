@@ -1,9 +1,9 @@
 #include "client.h"
+#include "util.h"
 
 #define BUFFERT 1024
 
 int main(int argc, char **argv) {
-	struct timeval start, stop, delta;
 	int socket_file_descriptor, file_descriptor;
 	char buf[BUFFERT];
 	off_t total_num_of_bytes = 0, sent_char_num, sz;
@@ -47,7 +47,6 @@ int main(int argc, char **argv) {
 		exit(3);
 	}
 
-	gettimeofday(&start, NULL);
 	read_bytes_num = read(file_descriptor, buf, BUFFERT);
 	while (read_bytes_num) {
 		if (read_bytes_num == -1) {
@@ -63,19 +62,17 @@ int main(int argc, char **argv) {
 			return EXIT_FAILURE;
 		}
 		total_num_of_bytes += sent_char_num;
-		// fprintf(stdout,"----\n%s\n----\n",buf);
 		bzero(buf, BUFFERT);
 		read_bytes_num = read(file_descriptor, buf, BUFFERT);
+
+		printProgress(((double)total_num_of_bytes / sz));
 	}
 	// read has returned 0: end of file
 	// to unblock the server
 	sent_char_num = sendto(socket_file_descriptor, buf, 0, 0, (struct sockaddr *)&sock_serv_client, address_len);
-	gettimeofday(&stop, NULL);
-	duration(&start, &stop, &delta);
 
-	printf("Number of bytes transferred : %ld\n", total_num_of_bytes);
+	printf("\nNumber of bytes transferred : %ld\n", total_num_of_bytes);
 	printf("On a total size of : %ld \n", sz);
-	printf("For a total duration of : %ld.%ld \n", delta.tv_sec, delta.tv_usec);
 
 	close(socket_file_descriptor);
 	

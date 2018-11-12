@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 // Time function, sockets, htons... file stat
-#include <sys/time.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
@@ -18,23 +17,6 @@
 #include <strings.h>
 
 struct sockaddr_in sock_serv_client;
-
-/* Function allowing the calculation of the duration of the sending */
-int duration(struct timeval *start, struct timeval *stop, struct timeval *delta) {
-	suseconds_t microstart, microstop, microdelta;
-
-	microstart = (suseconds_t)(100000 * (start->tv_sec)) + start->tv_usec;
-	microstop = (suseconds_t)(100000 * (stop->tv_sec)) + stop->tv_usec;
-	microdelta = microstop - microstart;
-
-	delta->tv_usec = microdelta % 100000;
-	delta->tv_sec = (time_t)(microdelta / 100000);
-
-	if ((*delta).tv_sec < 0 || (*delta).tv_usec < 0)
-		return -1;
-	else
-		return 0;
-}
 
 /* 
  * Function allowing the creation of a socket

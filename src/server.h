@@ -63,8 +63,6 @@ int create_server_socket(int port) {
         return EXIT_FAILURE;
     }
 
-    printf("server listening on %d...\n", port);
-
     return socket_file_descriptor;
 }
 
