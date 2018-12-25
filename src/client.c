@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
 		bzero(buf, BUFFERT);
 		read_bytes_num = read(file_descriptor, buf, BUFFERT);
 
-		printProgress(((double)total_num_of_bytes / sz));
+		print_progress(((double)total_num_of_bytes / sz));
 	}
 	// read has returned 0: end of file
 	// to unblock the server
