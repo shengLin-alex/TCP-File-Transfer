@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define PBSTR "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
+#define PBSTR "***************************************************************"
 #define PBWIDTH 60
 
 void print_progress(double ratio) {
